@@ -1,0 +1,13 @@
+steps:
+  - id: "get-project-name"
+    name: gcr.io/cloud-builders/gcloud
+    entrypoint: 'bq'
+    args: ['query', '--project_id','$_PROJECT_ID','--use_legacy_sql=false', "$_QUERY"]
+
+substitutions:
+  _QUERY: "SELECT 1"
+  _PROJECT_ID: "bigquery-cicd-dev"
+  
+
+
+
