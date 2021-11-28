@@ -2,27 +2,30 @@ steps:
   - id: "get-query"
     name: gcr.io/cloud-builders/gcloud
     entrypoint: 'git'
-    args: ['clone','https://github.com/alekhyachowdury/big-query-view-1.git']
-  - id: "check-query"
+    args: ['clone', '$_GITREPOURL']
+  - id: "run-query"
     name: gcr.io/cloud-builders/gcloud
     entrypoint: 'bash'
     args:
     - '-c'
-    - |      
-      cd big-query-view-1
-      cat query.txt
-  - id: "run-query"
-    name: gcr.io/cloud-builders/gcloud
-    entrypoint: 'bq'
-    args: ['query', '--project_id','$_PROJECT_ID','--use_legacy_sql=false', '$_QUERY']
+    - |   
+      ls
+      echo 'extracting query'
+      cat /workspace/big-query-view-1/$_VIEWNAME/$_GITREPOENVIRONMENT/query.SQL   
+      query=$(</workspace/big-query-view-1/$_VIEWNAME/$_GITREPOENVIRONMENT/query.SQL)
+      bq mk --project_id=$_PROJECT_ID --use_legacy_sql=false --view $query $_DATASETVIEWNAME 
 
 options:
     dynamic_substitutions: true
 
 substitutions:
-  _QUERY: "SELECT 1"
   _PROJECT_ID: "bigquery-cicd-${_ENVIRONMENT}"
   _ENVIRONMENT: "dev"
+  _DATASETNAME: "rawdataset_1"
+  _VIEWNAME: "View1"
+  _DATASETVIEWNAME: "${_DATASETNAME}.${_VIEWNAME}"
+  _GITREPOURL: "https://github.com/alekhyachowdury/big-query-view-1.git" 
+  _GITREPOENVIRONMENT: "Dev"
   
 
 
