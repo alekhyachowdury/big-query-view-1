@@ -1,4 +1,4 @@
-CREATE OR REPLACE VIEW `$_PROJECT_ID.$_DATASETNAME.$_VIEWNAME`
+CREATE OR REPLACE VIEW `bigquery-cicd-dev.rawdataset_1.View1`
 AS
 SELECT
 name,
