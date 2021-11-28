@@ -1,9 +1,9 @@
-'SELECT
+"\"SELECT
   name,
   number
 FROM
   `bigquery-public-data.usa_names.usa_1910_current`
 WHERE
-  gender = \"M\"
+  gender = 'M'
 ORDER BY
-  number DESC'
+  number DESC\""
