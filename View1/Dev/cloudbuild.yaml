@@ -13,7 +13,7 @@ steps:
       echo 'extracting query'      
       query=$(</workspace/big-query-view-1/$_VIEWNAME/$_GITREPOENVIRONMENT/query.SQL)
       echo $query
-      bq mk --project_id=$_PROJECT_ID --use_legacy_sql=false --view '$query' $_DATASETVIEWNAME 
+      bq mk --project_id=$_PROJECT_ID --use_legacy_sql=false --view \ $query \ $_DATASETVIEWNAME 
 
 options:
     dynamic_substitutions: true
