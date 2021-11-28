@@ -1,4 +1,4 @@
-''SELECT
+'SELECT
   name,
   number
 FROM
@@ -6,4 +6,4 @@ FROM
 WHERE
   gender = "M"
 ORDER BY
-  number DESC ''
+  number DESC'
