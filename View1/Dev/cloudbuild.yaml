@@ -1,0 +1,29 @@
+steps:
+  - id: "get-query"
+    name: gcr.io/cloud-builders/gcloud
+    entrypoint: 'git'
+    args: ['clone','https://github.com/alekhyachowdury/big-query-view-1.git']
+  - id: "check-query"
+    name: gcr.io/cloud-builders/gcloud
+    entrypoint: 'bash'
+    args:
+    - '-c'
+    - |      
+      cd big-query-view-1
+      cat query.txt
+  - id: "run-query"
+    name: gcr.io/cloud-builders/gcloud
+    entrypoint: 'bq'
+    args: ['query', '--project_id','$_PROJECT_ID','--use_legacy_sql=false', '$_QUERY']
+
+options:
+    dynamic_substitutions: true
+
+substitutions:
+  _QUERY: "SELECT 1"
+  _PROJECT_ID: "bigquery-cicd-${_ENVIRONMENT}"
+  _ENVIRONMENT: "dev"
+  
+
+
+
