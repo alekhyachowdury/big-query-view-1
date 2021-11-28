@@ -5,21 +5,16 @@ steps:
     args: ['clone', '$_GITREPOURL']
   - id: "run-query"
     name: gcr.io/cloud-builders/gcloud
-    entrypoint: 'bash'
+    entrypoint: 'bq'
     args:
-    - '-c'
-    - |   
-      ls
-      echo 'extracting query'      
-      query=$(</workspace/big-query-view-1/$_VIEWNAME/$_GITREPOENVIRONMENT/query.SQL)
-      echo $query
-      echo $query
-      bq mk --project_id=$_PROJECT_ID --use_legacy_sql=false --view  $query  $_DATASETVIEWNAME 
+    — query
+    — --use_legacy_sql=false
+    — $(</workspace/big-query-view-1/$_VIEWNAME/$_GITREPOENVIRONMENT/query.SQL)
 
 options:
     dynamic_substitutions: true
 
-substitutions:
+substitutions:  
   _PROJECT_ID: "bigquery-cicd-${_ENVIRONMENT}"
   _ENVIRONMENT: "dev"
   _DATASETNAME: "rawdataset_1"
